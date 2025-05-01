@@ -12,9 +12,9 @@ import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
 
 // Initialize LIFF
-liff.init({ liffId: '2007352105-mNZjoPra' })
+liff.init({ liffId: import.meta.env.VITE_LIFF_ID })
   .then(() => {
-    console.log('LIFF initialized successfully')
+    console.log('LIFF initialized successfully');
   })
   .catch((err: Error) => {
     console.error('LIFF initialization failed', err)
