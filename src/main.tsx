@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
+import liff from '@line/liff'
 
 import * as TanstackQuery from './integrations/tanstack-query/root-provider'
 
@@ -9,6 +10,15 @@ import { routeTree } from './routeTree.gen'
 
 import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
+
+// Initialize LIFF
+liff.init({ liffId: '2007352105-mNZjoPra' })
+  .then(() => {
+    console.log('LIFF initialized successfully')
+  })
+  .catch((err: Error) => {
+    console.error('LIFF initialization failed', err)
+  })
 
 // Create a new router instance
 const router = createRouter({
