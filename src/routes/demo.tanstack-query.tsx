@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface User {
   id: number
@@ -20,10 +20,11 @@ export const Route = createFileRoute('/demo/tanstack-query')({
 })
 
 function TanStackQueryDemo() {
-  const [refreshCount, setRefreshCount] = useState(0)
+  const [appendCount, setAppendCount] = useState(0)
+  const [stackedData, setStackedData] = useState<Array<User>>([])
   
   const { data, isLoading, error, refetch } = useQuery<Array<User>>({
-    queryKey: ['users', refreshCount],
+    queryKey: ['users', appendCount],
     queryFn: async () => {
       const response = await fetch('https://jsonplaceholder.typicode.com/users')
       if (!response.ok) {
@@ -34,9 +35,15 @@ function TanStackQueryDemo() {
   })
 
   const handleRefresh = () => {
-    setRefreshCount(prev => prev + 1)
+    setAppendCount(prev => prev + 1)
     refetch()
-  }
+          }   
+
+  useEffect(() => {
+    if (data) {
+      setStackedData(prev => [...prev, ...data])
+    }
+  }, [data])
 
   if (isLoading) return <div className="p-4">Loading users...</div>
   if (error) return <div className="p-4 text-red-500">Error: {error.message}</div>
@@ -46,7 +53,7 @@ function TanStackQueryDemo() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl">Users List</h1>
         <div className="flex items-center gap-4">
-          <span className="text-gray-500">Refreshed: {refreshCount} times</span>
+          <span className="text-gray-500">Appended: {appendCount} times</span>
           <button
             onClick={handleRefresh}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
@@ -56,7 +63,7 @@ function TanStackQueryDemo() {
         </div>
       </div>
       <div className="space-y-4">
-        {data?.map((user) => (
+        {stackedData.map((user) => (
           <div key={user.id} className="border p-4 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold">{user.name}</h2>
             <p className="text-gray-600">{user.email}</p>
