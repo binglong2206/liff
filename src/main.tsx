@@ -12,8 +12,10 @@ import { routeTree } from './routeTree.gen'
 import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
 
-// Initialize LIFF
+// Enable LIFF Inspector
 liff.use(new LIFFInspectorPlugin())
+
+// Initialize LIFF
 liff.init({ liffId: import.meta.env.VITE_LIFF_ID })
   .then(() => {
     console.log('LIFF initialized successfully')

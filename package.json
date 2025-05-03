@@ -23,6 +23,7 @@
     "@tanstack/router-plugin": "^1.114.3",
     "lucide-react": "^0.503.0",
     "react": "^19.0.0",
+    "react-audio-player": "^0.17.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.6"
   },
